@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Thumbnail Showcase</title>
+    <title>Portfolio Gallery</title>
     <style>
         * {
             margin: 0;
@@ -227,46 +227,73 @@
     
     <div class="container">
         <div class="header">
-            <h1>🎥 Thumbnail Gallery</h1>
-            <p>Showcase your amazing YouTube thumbnails</p>
-        </div>
-
-        <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
-            <h3>📤 Upload Your Thumbnails</h3>
-            <p>Click here or drag & drop your images</p>
-            <input type="file" id="fileInput" multiple accept="image/*" style="display: none;" onchange="handleFiles(event)">
+            <h1>� Portfolio Gallery</h1>
+            <p>Showcase your amazing portfolio pieces</p>
         </div>
 
         <div class="thumbnails-grid" id="thumbnailsGrid">
-            <!-- Sample thumbnails - replace with your own -->
+            <!-- Portfolio thumbnails -->
             <div class="thumbnail-card">
-                <img src="https://via.placeholder.com/350x200/ff6b6b/ffffff?text=Thumbnail+1" alt="Thumbnail 1" class="thumbnail-image">
-                <div class="thumbnail-title">Epic Gaming Moment</div>
+                <img src="thumbnails/thumbnail1.jpg" alt="Portfolio Item 1" class="thumbnail-image">
+                <div class="thumbnail-title">Portfolio Item 1</div>
                 <div class="thumbnail-stats">
-                    <span>👀 1.2M views</span>
-                    <span>👍 45K likes</span>
+                    <span>📅 2023</span>
+                    <span>⭐ Featured</span>
                 </div>
-                <button class="view-btn" onclick="openYouTube('https://youtube.com')">Watch Now</button>
             </div>
 
             <div class="thumbnail-card">
-                <img src="https://via.placeholder.com/350x200/4ecdc4/ffffff?text=Thumbnail+2" alt="Thumbnail 2" class="thumbnail-image">
-                <div class="thumbnail-title">Tutorial Masterclass</div>
+                <img src="thumbnails/thumbnail2.jpg" alt="Portfolio Item 2" class="thumbnail-image">
+                <div class="thumbnail-title">Portfolio Item 2</div>
                 <div class="thumbnail-stats">
-                    <span>👀 856K views</span>
-                    <span>👍 32K likes</span>
+                    <span>📅 2023</span>
+                    <span>⭐ Featured</span>
                 </div>
-                <button class="view-btn" onclick="openYouTube('https://youtube.com')">Watch Now</button>
             </div>
 
             <div class="thumbnail-card">
-                <img src="https://via.placeholder.com/350x200/45b7d1/ffffff?text=Thumbnail+3" alt="Thumbnail 3" class="thumbnail-image">
-                <div class="thumbnail-title">Challenge Accepted!</div>
+                <img src="thumbnails/thumbnail3.jpg" alt="Portfolio Item 3" class="thumbnail-image">
+                <div class="thumbnail-title">Portfolio Item 3</div>
                 <div class="thumbnail-stats">
-                    <span>👀 2.1M views</span>
-                    <span>👍 67K likes</span>
+                    <span>📅 2024</span>
+                    <span>⭐ Featured</span>
                 </div>
-                <button class="view-btn" onclick="openYouTube('https://youtube.com')">Watch Now</button>
+            </div>
+
+            <div class="thumbnail-card">
+                <img src="thumbnails/thumbnail4.jpg" alt="Portfolio Item 4" class="thumbnail-image">
+                <div class="thumbnail-title">Portfolio Item 4</div>
+                <div class="thumbnail-stats">
+                    <span>📅 2024</span>
+                    <span>⭐ Featured</span>
+                </div>
+            </div>
+
+            <div class="thumbnail-card">
+                <img src="thumbnails/thumbnail5.jpg" alt="Portfolio Item 5" class="thumbnail-image">
+                <div class="thumbnail-title">Portfolio Item 5</div>
+                <div class="thumbnail-stats">
+                    <span>📅 2024</span>
+                    <span>⭐ Featured</span>
+                </div>
+            </div>
+
+            <div class="thumbnail-card">
+                <img src="thumbnails/thumbnail6.jpg" alt="Portfolio Item 6" class="thumbnail-image">
+                <div class="thumbnail-title">Portfolio Item 6</div>
+                <div class="thumbnail-stats">
+                    <span>📅 2024</span>
+                    <span>⭐ Featured</span>
+                </div>
+            </div>
+
+            <div class="thumbnail-card">
+                <img src="thumbnails/thumbnail7.jpg" alt="Portfolio Item 7" class="thumbnail-image">
+                <div class="thumbnail-title">Portfolio Item 7</div>
+                <div class="thumbnail-stats">
+                    <span>📅 2024</span>
+                    <span>⭐ Featured</span>
+                </div>
             </div>
         </div>
     </div>
@@ -286,58 +313,8 @@
             }
         }
 
-        // Handle file uploads
-        function handleFiles(event) {
-            const files = Array.from(event.target.files);
-            const grid = document.getElementById('thumbnailsGrid');
-            
-            files.forEach((file, index) => {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const card = document.createElement('div');
-                    card.className = 'thumbnail-card';
-                    card.innerHTML = `
-                        <img src="${e.target.result}" alt="Uploaded Thumbnail" class="thumbnail-image">
-                        <div class="thumbnail-title">${file.name}</div>
-                        <div class="thumbnail-stats">
-                            <span>👀 New Upload</span>
-                            <span>⭐ Featured</span>
-                        </div>
-                        <button class="view-btn">View Video</button>
-                    `;
-                    grid.insertBefore(card, grid.firstChild);
-                };
-                reader.readAsDataURL(file);
-            });
-        }
-
-        // Open YouTube link
-        function openYouTube(url) {
-            window.open(url, '_blank');
-        }
-
         // Initialize
         window.addEventListener('load', createParticles);
-
-        // Drag & drop functionality
-        const uploadZone = document.querySelector('.upload-zone');
-        uploadZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadZone.style.background = 'rgba(255,255,255,0.2)';
-        });
-
-        uploadZone.addEventListener('dragleave', () => {
-            uploadZone.style.background = 'transparent';
-        });
-
-        uploadZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadZone.style.background = 'transparent';
-            const files = Array.from(e.dataTransfer.files);
-            const fileInput = document.getElementById('fileInput');
-            fileInput.files = files;
-            handleFiles({ target: fileInput });
-        });
     </script>
 </body>
 </html>

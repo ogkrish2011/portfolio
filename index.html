@@ -1,75 +1,343 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Not Naitik |  Portfolio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Thumbnail Showcase</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #f9ca24, #ff9ff3);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .header h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.5rem;
+            opacity: 0.9;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .thumbnails-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 20px 0;
+        }
+
+        .thumbnail-card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 25px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: cardFloat 6s ease-in-out infinite;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .thumbnail-card:hover {
+            transform: translateY(-20px) scale(1.05);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+        }
+
+        .thumbnail-card:nth-child(1) { animation-delay: 0s; }
+        .thumbnail-card:nth-child(2) { animation-delay: 1s; }
+        .thumbnail-card:nth-child(3) { animation-delay: 2s; }
+        .thumbnail-card:nth-child(4) { animation-delay: 0.5s; }
+        .thumbnail-card:nth-child(5) { animation-delay: 1.5s; }
+        .thumbnail-card:nth-child(6) { animation-delay: 2.5s; }
+
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .thumbnail-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .thumbnail-card:hover .thumbnail-image {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .thumbnail-title {
+            color: white;
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .thumbnail-stats {
+            display: flex;
+            justify-content: space-between;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+        }
+
+        .view-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255,107,107,0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .view-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255,107,107,0.6);
+        }
+
+        .view-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255,255,255,0.6);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .thumbnails-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        .upload-zone {
+            border: 3px dashed rgba(255,255,255,0.5);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            color: white;
+            margin: 40px 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-zone:hover {
+            border-color: rgba(255,255,255,1);
+            background: rgba(255,255,255,0.1);
+        }
+    </style>
 </head>
 <body>
-  <header class="hero">
+    <div class="floating-particles" id="particles"></div>
+    
     <div class="container">
-      <p class="tag">Portfolio</p>
-      <h1>Not Naitik</h1>
-      <p class="subtitle">Professional Thumbnail Maker</p>
-      <p class="description">
-        Eye-catching, high-converting thumbnails tailored for YouTube, social media, and brand campaigns.
-      </p>
-      <a class="cta" href="#contact">Hire Me</a>
-    </div>
-  </header>
-
-  <main>
-    <section class="section" id="about">
-      <div class="container">
-        <h2>About</h2>
-        <p>
-          I create powerful thumbnail designs that grab attention instantly and improve click-through rates.
-          I can craft custom visuals for any niche and style.
-        </p>
-      </div>
-    </section>
-
-    <section class="section" id="work">
-      <div class="container">
-        <h2>Thumbnail Samples</h2>
-        <p class="section-note">Here are the samples of thumbnails I've created.</p>
-        <div class="grid">
-          <img src="thumbnails/thumbnail1.jpg" alt="Thumbnail sample 1" />
-          <img src="thumbnails/thumbnail2.jpg" alt="Thumbnail sample 2" />
-          <img src="thumbnails/thumbnail3.jpg" alt="Thumbnail sample 3" />
-          <img src="thumbnails/thumbnail4.jpg" alt="Thumbnail sample 4" />
-          <img src="thumbnails/thumbnail5.jpg" alt="Thumbnail sample 5" />
-          <img src="thumbnails/thumbnail6.jpg" alt="Thumbnail sample 6" />
-          <img src="thumbnails/thumbnail7.jpg" alt="Thumbnail sample 7" />
+        <div class="header">
+            <h1>🎥 Thumbnail Gallery</h1>
+            <p>Showcase your amazing YouTube thumbnails</p>
         </div>
-      </div>
-    </section>
 
-    <section class="section" id="contact">
-      <div class="container">
-        <h2>Contact</h2>
-        <div class="contact-card">
-          <p><strong>Discord ID:</strong> ankitbhai8483</p>
-          <p><strong>Email:</strong> <a href="mailto:notaniket766@gmail.com">notaniket766@gmail.com</a></p>
-          <div class="contact-actions">
-            <a class="action-btn" href="mailto:notaniket766@gmail.com">Send Email</a>
-            <a class="action-btn discord-btn" href="https://discord.com/users/ankitbhai8483" target="_blank" rel="noopener noreferrer">Message on Discord</a>
-          </div>
+        <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+            <h3>📤 Upload Your Thumbnails</h3>
+            <p>Click here or drag & drop your images</p>
+            <input type="file" id="fileInput" multiple accept="image/*" style="display: none;" onchange="handleFiles(event)">
         </div>
-      </div>
-    </section>
-  </main>
 
-  <footer>
-    <div class="container">
-      <p>&copy; <span id="year"></span> Not Naitik. All rights reserved.</p>
+        <div class="thumbnails-grid" id="thumbnailsGrid">
+            <!-- Sample thumbnails - replace with your own -->
+            <div class="thumbnail-card">
+                <img src="https://via.placeholder.com/350x200/ff6b6b/ffffff?text=Thumbnail+1" alt="Thumbnail 1" class="thumbnail-image">
+                <div class="thumbnail-title">Epic Gaming Moment</div>
+                <div class="thumbnail-stats">
+                    <span>👀 1.2M views</span>
+                    <span>👍 45K likes</span>
+                </div>
+                <button class="view-btn" onclick="openYouTube('https://youtube.com')">Watch Now</button>
+            </div>
+
+            <div class="thumbnail-card">
+                <img src="https://via.placeholder.com/350x200/4ecdc4/ffffff?text=Thumbnail+2" alt="Thumbnail 2" class="thumbnail-image">
+                <div class="thumbnail-title">Tutorial Masterclass</div>
+                <div class="thumbnail-stats">
+                    <span>👀 856K views</span>
+                    <span>👍 32K likes</span>
+                </div>
+                <button class="view-btn" onclick="openYouTube('https://youtube.com')">Watch Now</button>
+            </div>
+
+            <div class="thumbnail-card">
+                <img src="https://via.placeholder.com/350x200/45b7d1/ffffff?text=Thumbnail+3" alt="Thumbnail 3" class="thumbnail-image">
+                <div class="thumbnail-title">Challenge Accepted!</div>
+                <div class="thumbnail-stats">
+                    <span>👀 2.1M views</span>
+                    <span>👍 67K likes</span>
+                </div>
+                <button class="view-btn" onclick="openYouTube('https://youtube.com')">Watch Now</button>
+            </div>
+        </div>
     </div>
-  </footer>
 
-  <script src="script.js"></script>
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.width = particle.style.height = (Math.random() * 8 + 2) + 'px';
+                particle.style.animationDuration = (Math.random() * 20 + 15) + 's';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Handle file uploads
+        function handleFiles(event) {
+            const files = Array.from(event.target.files);
+            const grid = document.getElementById('thumbnailsGrid');
+            
+            files.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const card = document.createElement('div');
+                    card.className = 'thumbnail-card';
+                    card.innerHTML = `
+                        <img src="${e.target.result}" alt="Uploaded Thumbnail" class="thumbnail-image">
+                        <div class="thumbnail-title">${file.name}</div>
+                        <div class="thumbnail-stats">
+                            <span>👀 New Upload</span>
+                            <span>⭐ Featured</span>
+                        </div>
+                        <button class="view-btn">View Video</button>
+                    `;
+                    grid.insertBefore(card, grid.firstChild);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Open YouTube link
+        function openYouTube(url) {
+            window.open(url, '_blank');
+        }
+
+        // Initialize
+        window.addEventListener('load', createParticles);
+
+        // Drag & drop functionality
+        const uploadZone = document.querySelector('.upload-zone');
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadZone.style.background = 'rgba(255,255,255,0.2)';
+        });
+
+        uploadZone.addEventListener('dragleave', () => {
+            uploadZone.style.background = 'transparent';
+        });
+
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.style.background = 'transparent';
+            const files = Array.from(e.dataTransfer.files);
+            const fileInput = document.getElementById('fileInput');
+            fileInput.files = files;
+            handleFiles({ target: fileInput });
+        });
+    </script>
 </body>
 </html>
